@@ -1,69 +1,354 @@
-:root {
-    --primary: #050505;
-    --primaryLight: #fcffff;
-    --secondary: #393b3b;
-    --secondaryLight: #ffffff;
-    --secondaryDark: #272828;
-    --headerColor: #3f3f3f;
-    --bodyTextColor: #ffffff;
-    --bodyTextColorWhite: #fafbfc;
-    /* 13px - 16px */
-    --topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
-    /* 31px - 49px */
-    --headerFontSize: clamp(1.9375rem, 3.9vw, 3.0625rem);
-    --bodyFontSize: 1rem;
-    /* 60px - 100px top and bottom */
-    --sectionPadding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoCal Radio Solutions | Communications Hub</title>
 
-@font-face {
-    font-family: ProximaNovaRegular;
-    src: url("../fonts/ProximaNovaRegular.otf") format("opentype");
-}
+    <meta name="description" content="SoCal Radio Solutions provides professional support for Motorola, Kenwood, and mesh radio systems across Southern California. Join our Discord for RF engineering help.">
 
-body {
-    font-family: 'ProximaNovaRegular', sans-serif;
-    margin: 0;
-    padding: 0;
-}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-*,
-*:before,
-*:after {
-    /* prevents padding from affecting height and width */
-    box-sizing: border-box;
-}
+    <style>
+        :root {
+            --bg: #050810;
+            --accent: #38bdf8;
+            --discord: #5865F2;
+            --glass: rgba(15, 23, 42, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #4ade80;
+            --warning: #facc15;
+        }
 
-.cs-topper {
-    font-size: var(--topperFontSize);
-    line-height: 1.2em;
-    text-transform: uppercase;
-    text-align: inherit;
-    letter-spacing: .1em;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 0.25rem;
-    display: block;
-}
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-.cs-title {
-    font-size: var(--headerFontSize);
-    font-weight: 900;
-    line-height: 1.2em;
-    text-align: inherit;
-    max-width: 43.75rem;
-    margin: 0 0 1rem 0;
-    color: var(--headerColor);
-    position: relative;
-    width: 65%;
-}
+        .blob-bg {
+            position: fixed;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
 
-.cs-text {
-    font-size: var(--bodyFontSize);
-    line-height: 1.5em;
-    text-align: justify;
-    width: 100%;
-    max-width: 40.625rem;
-    margin: 0;
-    color: var(--bodyTextColor);
-}
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 8, 16, 0.8);
+        }
+
+        /* LIVE NETWORK TICKER AREA */
+        .ticker-wrap {
+            flex: 1;
+            margin: 0 40px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 8px 0;
+            border-left: 2px solid var(--accent);
+            border-right: 2px solid var(--accent);
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker 30s linear infinite;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .ticker span { margin-right: 50px; }
+        .ticker b { color: var(--accent); }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo i {
+            color: var(--accent);
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+        }
+
+        .logo span { color: var(--accent); }
+
+        .btn-nav {
+            background: var(--discord);
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-nav:hover {
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* STATUS TRACKER BAR */
+        .status-bar {
+            background: var(--glass);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 8%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .status-item { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.8rem; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .pulse { background: var(--success); animation: pulse-green 2s infinite; }
+        .wip { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
+
+        header { text-align: center; padding: 100px 10%; }
+
+        .pill {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.1;
+            margin: 0;
+            font-weight: 800;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            margin: 30px auto;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .hero-btns { display: flex; gap: 15px; justify-content: center; }
+
+        .btn-primary {
+            background: white;
+            color: black;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-top: 80px;
+            font-weight: 800;
+        }
+
+        .roadmap-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 40px 8%;
+        }
+
+        .card {
+            padding: 40px;
+            border-radius: 24px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px;
+            color: #475569;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 1024px) {
+            .ticker-wrap { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-btns { flex-direction: column; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="blob-bg"></div>
+
+<nav>
+    <div class="logo">
+        <i class="fas fa-broadcast-tower"></i> SOCAL <span>RADIO</span>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span><b>SYSTEM STATUS:</b> ALL NETWORKS NOMINAL</span>
+            <span><b>UPCOMING NET:</b> WEDNESDAY 19:00 (24H)</span>
+            <span><b>FOCUS:</b> MOTOROLA APX / KENWOOD NEXEDGE / AREDN MESH</span>
+            <span><b>LOCATION:</b> SOUTHERN CALIFORNIA RF OPERATIONS</span>
+        </div>
+    </div>
+
+    <a href="https://discord.gg/GfRpyMyuwZ" class="btn-nav" target="_blank">Join Discord</a>
+</nav>
+
+<div class="status-bar">
+    <div class="status-item"><div class="dot pulse"></div> Discord P25/DMR: <strong>Online</strong></div>
+    <div class="status-item"><div class="dot wip"></div> RF Repeater: <strong>Planning Phase</strong></div>
+    <div class="status-item"><i class="far fa-clock"></i> <strong id="clock">00:00</strong></div>
+</div>
+
+<header>
+    <div class="pill">Official SoCal Radio Solutions</div>
+    <h1>Multi-Platform Radio Support</h1>
+    <p>Expert support for Motorola, Kenwood, and Mesh systems. Connecting Southern California through professional RF engineering.</p>
+    <div class="hero-btns">
+        <a href="https://discord.gg/GfRpyMyuwZ" class="btn-primary" target="_blank">Connect on Discord</a>
+        <a href="#hardware" class="btn-secondary">Supported Gear</a>
+    </div>
+</header>
+
+<section id="roadmap" style="padding: 0 8%;">
+    <h2 class="section-title">Project Roadmap</h2>
+    <div class="card">
+        <div class="roadmap-item">
+            <h4 style="color: var(--success); margin: 0;">Phase 1: Digital Bridge (LIVE)</h4>
+            <p>Establishing audio bridges for community access via phone or PC using Discord.</p>
+        </div>
+        <div class="roadmap-item">
+            <h4 style="color: var(--warning); margin: 0;">Phase 2: RF Infrastructure (PLANNING)</h4>
+            <p>Currently researching site locations and hardware for physical P25/DMR coverage.</p>
+        </div>
+    </div>
+</section>
+
+<section id="hardware">
+    <h2 class="section-title">Hardware Support</h2>
+    <div class="grid">
+        <div class="card">
+            <div class="brand">MOTOROLA</div>
+            <p>APX, XTS, XTL, and MOTOTRBO support including CPS guidance and codeplug structure.</p>
+        </div>
+        <div class="card">
+            <div class="brand">KENWOOD</div>
+            <p>NEXEDGE and TK-series programming, digital/analog optimization.</p>
+        </div>
+        <div class="card">
+            <div class="brand">MESH & INTEROP</div>
+            <p>AREDN mesh, interoperability planning, and multi-agency coordination.</p>
+        </div>
+    </div>
+</section>
+
+<section class="info-container">
+    <h2 class="section-title">Compliance Notice</h2>
+    <p style="color:#94a3b8; font-size:0.9rem;">
+        SoCal Radio Solutions provides educational and technical assistance only.
+        All users are responsible for operating within FCC and local regulations.
+    </p>
+</section>
+
+<footer>
+    <p>&copy; 2025 SoCal Radio Solutions. Operating on 24-hour time.</p>
+</footer>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('clock').textContent = `${hours}:${minutes}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
+</body>
+</html>
