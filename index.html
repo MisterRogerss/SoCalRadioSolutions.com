@@ -1,176 +1,354 @@
-<!DOCTYPE html><html lang="en"><head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoCal Radio Solutions | Communications Hub</title>
 
-	<title>Los Angeles County Roleplay</title>
+    <meta name="description" content="SoCal Radio Solutions provides professional support for Motorola, Kenwood, and mesh radio systems across Southern California. Join our Discord for RF engineering help.">
 
-	<meta name="theme-color" content="#006F71">
-	<meta name="title" content="Los Angeles County Roleplay">
-	<meta name="description" content="vMenu / Sonoran CAD / Custom Vehicles &amp; more!!">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
 
-	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://LosAngelesCountyrp.com">
-	<meta property="og:title" content="Los Angeles County Roleplay">
-	<meta property="og:description" content="vMenu / Sonoran CAD / Custom Vehicles &amp;  more!!">
-	<meta property="og:image" content="images/banner.png">
+    <style>
+        :root {
+            --bg: #050810;
+            --accent: #38bdf8;
+            --discord: #5865F2;
+            --glass: rgba(15, 23, 42, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #4ade80;
+            --warning: #facc15;
+        }
 
-	<meta property="twitter:card" content="summary_large_image">
-	<meta property="twitter:url" content="https://LosAngelesCountyrp.com">
-	<meta property="twitter:title" content="Los Angeles County Roleplay">
-	<meta property="twitter:description" content="vMenu / Sonoran CAD / Custom Vehicles &amp;  more!!">
-	<meta property="twitter:image" content="https://LosAngelesCountyrp.com/assets/img/banner.png">
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
+        .blob-bg {
+            position: fixed;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/custom.css">
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(5, 8, 16, 0.8);
+        }
+
+        /* LIVE NETWORK TICKER AREA */
+        .ticker-wrap {
+            flex: 1;
+            margin: 0 40px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 8px 0;
+            border-left: 2px solid var(--accent);
+            border-right: 2px solid var(--accent);
+        }
+
+        .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding-right: 100%;
+            animation: ticker 30s linear infinite;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .ticker span { margin-right: 50px; }
+        .ticker b { color: var(--accent); }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo i {
+            color: var(--accent);
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+        }
+
+        .logo span { color: var(--accent); }
+
+        .btn-nav {
+            background: var(--discord);
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-nav:hover {
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* STATUS TRACKER BAR */
+        .status-bar {
+            background: var(--glass);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 8%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .status-item { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.8rem; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .pulse { background: var(--success); animation: pulse-green 2s infinite; }
+        .wip { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+        }
+
+        header { text-align: center; padding: 100px 10%; }
+
+        .pill {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.1;
+            margin: 0;
+            font-weight: 800;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            margin: 30px auto;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .hero-btns { display: flex; gap: 15px; justify-content: center; }
+
+        .btn-primary {
+            background: white;
+            color: black;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-top: 80px;
+            font-weight: 800;
+        }
+
+        .roadmap-item {
+            border-left: 2px solid var(--accent);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 40px 8%;
+        }
+
+        .card {
+            padding: 40px;
+            border-radius: 24px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            transition: 0.4s;
+        }
+
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px;
+            color: #475569;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 1024px) {
+            .ticker-wrap { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-btns { flex-direction: column; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
 </head>
-
 <body>
-	<section id="hero-143">
-		<div class="cs-container">
-			<picture>
-				<source class="cs-title" media="(min-width: 900px)" srcset="images/logo.png">
-				<img class="cs-title" src="images/logo_small.png">
-			</picture>
-			<p class="cs-text" style="text-align: center !important;">vMenu / Sonoran CAD / Custom Vehicles &amp;  more!!</p>
-			<a href="https://discord.gg/lacountyrp21" target="_blank" class="cs-button-solid">Join our Discord</a>
-		</div>
 
-		<picture class="cs-background">
-			<source media="(max-width: 600px)" srcset="images/bg-1.png">
-			<source media="(min-width: 601px)" srcset="images/bg-1.png">
-			<img loading="lazy" decoding="async" src="images/bg-1.png" alt="kitchen" width="2250" height="1500" aria-hidden="true">
-		</picture>
-	</section>
+<div class="blob-bg"></div>
 
-	<section id="h-services-143">
-		<ul class="cs-card-group">
-			<p class="cs-text">
-				LA Country RP (LACRP) was established in 2021 with the mission of creating a welcoming, exciting, and safe environment for all members. Powered by FiveM servers featuring custom-designed assets and scripts, we deliver a one-of-a-kind roleplaying experience.
-				LACRP is a community where members can unwind, forge new friendships, or even spark rivalries. As a growing and evolving group, were thrilled about the opportunities ahead and cant wait to share them with you. Join us, and lets shape the future of LA Country RP together!
-			</p>
-			<p></p>
-					
-			<p class="cs-text">
-				At LA Country RP (LACRP), we pride ourselves on being a community that welcomes everyone with a passion for roleplay. It doesnt matter if youre an experienced roleplayer or just starting outthis is a place where everyone can feel at home. 
-				Our mission is to create an environment where members can thrive, explore, and have fun. No matter your background, were excited to have you join us and help make our community even stronger!
-			</p>
-			<p></p>
-				
-			<p class="cs-text">
-				At LA Country RP (LACRP), we celebrate all styles of realistic roleplay, giving you the freedom to bring your unique vision to life. Whether you choose to walk the path of a law-abiding citizen or explore the thrill of a more daring lifestyle, the decision is entirely yours.
-                We take pride in maintaining a respectful, inclusive, and mature community, which is why we’ve set a minimum age requirement of 18 years old. Our goal is to create a space where creativity knows no bounds, respect is a cornerstone, and every member is an integral part of our journey.
-                What story will you create? The possibilities are endless, and your adventure starts here!
-			</p>
-			<p></p>
-		</ul>
-	</section>
+<nav>
+    <div class="logo">
+        <i class="fas fa-broadcast-tower"></i> SOCAL <span>RADIO</span>
+    </div>
 
-	<!-- ============================================ -->
-	<!--                   Quote                      -->
-	<!-- ============================================ -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span><b>SYSTEM STATUS:</b> ALL NETWORKS NOMINAL</span>
+            <span><b>UPCOMING NET:</b> WEDNESDAY 19:00 (24H)</span>
+            <span><b>FOCUS:</b> MOTOROLA APX / KENWOOD NEXEDGE / AREDN MESH</span>
+            <span><b>LOCATION:</b> SOUTHERN CALIFORNIA RF OPERATIONS</span>
+        </div>
+    </div>
 
-	<section id="quote-560">
-		<div class="cs-container">
-			<div class="cs-content">
-				<p class="cs-quote">
-					"At LACRP, we understand that no matter your rank or experience, we’re all individuals working together to create something extraordinary. As a volunteer-driven community, we deeply appreciate the time, effort, and dedication our members contribute. Your commitment is what makes LACRP truly special, and for that, we are sincerely grateful.
-				</p>
-				<p class="cs-quote">
-					we are dedicated to cultivating a progressive and inclusive environment where every voice matters. We encourage all members to share their ideas, suggestions, and concerns, as we believe open communication is the foundation for growth and meaningful change. Together, we can continue to improve and evolve our community."
-				</p>
+    <a href="https://discord.gg/GfRpyMyuwZ" class="btn-nav" target="_blank">Join Discord</a>
+</nav>
 
-				<p class="cs-quote">
-					Thank you for being an integral part of our community!
-				</p>
-				<span class="cs-name">J Ramirez. - Owner</span>
-			</div>
-		</div>
-	</section>
-                                
+<div class="status-bar">
+    <div class="status-item"><div class="dot pulse"></div> Discord P25/DMR: <strong>Online</strong></div>
+    <div class="status-item"><div class="dot wip"></div> RF Repeater: <strong>Planning Phase</strong></div>
+    <div class="status-item"><i class="far fa-clock"></i> <strong id="clock">00:00</strong></div>
+</div>
 
-	<footer id="footer-1147">
-		<div class="cs-container">
-			<div class="cs-top">
-				<a aria-label="go back to home" class="cs-logo" href="#" onclick="scrollToTop();return false;">
-					<img class="cs-logo-img" loading="lazy" decoding="async" src="images/logo_abrev.png" alt="logo">
-				</a>
-				<ul class="cs-ul">
-					<li class="cs-li">
-						<a href="#" class="cs-link" onclick="scrollToTop();return false;">Home</a>
-					</li>
-					<li class="cs-li">
-						<a href="https://discord.gg/lacountyrp21" class="cs-link" target="_blank">Discord</a>
-					</li>
-					<li class="cs-li">
-						<a href="https://docs.google.com/document/d/1-D8WTB41m375j86hpQjEMrhuNqRZtvU0HrluqxrL0pY/edit?usp=sharing" class="cs-link" target="_blank">Rules &amp; Regulation</a>
-					</li>
-				</ul>
-			</div>
+<header>
+    <div class="pill">Official SoCal Radio Solutions</div>
+    <h1>Multi-Platform Radio Support</h1>
+    <p>Expert support for Motorola, Kenwood, and Mesh systems. Connecting Southern California through professional RF engineering.</p>
+    <div class="hero-btns">
+        <a href="https://discord.gg/GfRpyMyuwZ" class="btn-primary" target="_blank">Connect on Discord</a>
+        <a href="#hardware" class="btn-secondary">Supported Gear</a>
+    </div>
+</header>
 
-			<div class="cs-bottom">
-				<ul class="cs-social">
-					<li class="cs-social-li">
-						<a href="https://twitter.com/OfficialLACRP" class="cs-social-link" aria-label="twitter" target="_blank" rel="noopener">
-							<img class="cs-social-icon cs-default" src="images/twitter.svg" alt="icon" loading="lazy" decoding="async" width="12" height="12" aria-hidden="true">
-						</a>
-					</li>
-					<li class="cs-social-li">
-						<a href="https://www.instagram.com/official_lacrp21/" class="cs-social-link" aria-label="instagram" target="_blank" rel="noopener">
-							<img class="cs-social-icon cs-default" src="images/instagram.svg" alt="icon" loading="lazy" decoding="async" width="12" height="12" aria-hidden="true">
-						</a>
-					</li>
-					<li class="cs-social-li">
-						<a href="https://www.youtube.com/@LACRP" class="cs-social-link" aria-label="youtube" target="_blank" rel="noopener">
-							<img class="cs-social-icon cs-default" src="images/youtube.svg" alt="icon" loading="lazy" decoding="async" width="12" height="12" aria-hidden="true">
-						</a>
-					</li>
-				</ul>
+<section id="roadmap" style="padding: 0 8%;">
+    <h2 class="section-title">Project Roadmap</h2>
+    <div class="card">
+        <div class="roadmap-item">
+            <h4 style="color: var(--success); margin: 0;">Phase 1: Digital Bridge (LIVE)</h4>
+            <p>Establishing audio bridges for community access via phone or PC using Discord.</p>
+        </div>
+        <div class="roadmap-item">
+            <h4 style="color: var(--warning); margin: 0;">Phase 2: RF Infrastructure (PLANNING)</h4>
+            <p>Currently researching site locations and hardware for physical P25/DMR coverage.</p>
+        </div>
+    </div>
+</section>
 
-				<span class="cs-copyright">
-					Created by Josiah O.<br>Los Angeles County Roleplay 2021 - <span id="current-year">2024</span>
-				</span>
-			</div>
-		</div>
-		<!--Background-->
-		<picture class="cs-background">
-			<img loading="lazy" decoding="async" src="images/footer.png">
-		</picture>
-	</footer>
+<section id="hardware">
+    <h2 class="section-title">Hardware Support</h2>
+    <div class="grid">
+        <div class="card">
+            <div class="brand">MOTOROLA</div>
+            <p>APX, XTS, XTL, and MOTOTRBO support including CPS guidance and codeplug structure.</p>
+        </div>
+        <div class="card">
+            <div class="brand">KENWOOD</div>
+            <p>NEXEDGE and TK-series programming, digital/analog optimization.</p>
+        </div>
+        <div class="card">
+            <div class="brand">MESH & INTEROP</div>
+            <p>AREDN mesh, interoperability planning, and multi-agency coordination.</p>
+        </div>
+    </div>
+</section>
 
-	<script type="text/javascript">
-		// Current Year
-		document.getElementById('current-year').innerHTML = new Date().getFullYear();
+<section class="info-container">
+    <h2 class="section-title">Compliance Notice</h2>
+    <p style="color:#94a3b8; font-size:0.9rem;">
+        SoCal Radio Solutions provides educational and technical assistance only.
+        All users are responsible for operating within FCC and local regulations.
+    </p>
+</section>
 
-		// Scroll to Top
-		const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+<footer>
+    <p>&copy; 2025 SoCal Radio Solutions. Operating on 24-hour time.</p>
+</footer>
 
-		// Image Slide Show
-		const imageCount = 14;
-		const imageEl = document.querySelector('#hero-143');
+<script>
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('clock').textContent = `${hours}:${minutes}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
 
-		let index = 2;
-
-		window.onload = () => setInterval(async () => {
-			const newImage = new Image();
-			const imageUrl = `./assets/img/rotation/bg-${index}.png`;
-
-			newImage.src = imageUrl;
-
-			await newImage.decode();
-
-			imageEl.style.transition = '0.8s';
-			imageEl.style.opacity = 0;
-			imageEl.style.backgroundImage = `url(${imageUrl})`;
-			imageEl.style.transition = '0.8s';
-			imageEl.style.opacity = 1;
-
-			index === imageCount ? index = 1 : index++;
-		}, 5000);
-	</script>
-<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" data-cf-beacon="{" rayid":"8f45d6028f3496f1","version":"2024.10.5","r":1,"token":"f1eef5231be848eab3a907754c310535","servertiming":{"name":{"cfextpri":true,"cfl4":true,"cfspeedbrain":true,"cfcachestatus":true}}}"="" crossorigin="anonymous"></script>
-
-
-</body></html>
+</body>
+</html>
